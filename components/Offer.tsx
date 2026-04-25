@@ -10,8 +10,8 @@ export const Offer: React.FC<OfferProps> = ({ onBuyClick }) => {
   return (
     <section className="py-12 px-4 bg-sand/30 max-w-lg mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-extrabold text-navy mb-2">Wielka księga rozwoju</h2>
-        <p className="text-terracotta font-medium">System neuropsychologów w Twoim domu.</p>
+        <h2 className="text-3xl font-extrabold text-navy mb-2">O Grande Livro do Desenvolvimento</h2>
+        <p className="text-terracotta font-medium">O sistema dos neuropsicólogos na sua casa.</p>
       </div>
 
       <div className="bg-white rounded-2xl p-6 shadow-xl border border-sand mb-8 relative overflow-hidden">
@@ -19,35 +19,35 @@ export const Offer: React.FC<OfferProps> = ({ onBuyClick }) => {
         
         <div className="relative z-10">
           <div className="inline-block bg-terracotta/10 text-terracotta text-xs font-bold px-3 py-1 rounded-full mb-4">
-            HIT SPRZEDAŻY
+            MAIS VENDIDO
           </div>
-          <h3 className="font-bold text-navy mb-6 text-lg">Co otrzymujesz:</h3>
+          <h3 className="font-bold text-navy mb-6 text-lg">O que você recebe:</h3>
           <ul className="space-y-4 mb-8">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-sage shrink-0 mt-0.5" />
-              <span className="text-navy/80 font-medium">Książka PDF wysokiej jakości (150+ stron)</span>
+              <span className="text-navy/80 font-medium">Livro PDF de alta qualidade (150+ páginas)</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-sage shrink-0 mt-0.5" />
-              <span className="text-navy/80 font-medium">Ćwiczenia na ruch, oddychanie, logikę</span>
+              <span className="text-navy/80 font-medium">Exercícios de movimento, respiração e lógica</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-sage shrink-0 mt-0.5" />
-              <span className="text-navy/80 font-medium">Arkusze do druku (wieczne)</span>
+              <span className="text-navy/80 font-medium">Folhas para imprimir (eternas)</span>
             </li>
           </ul>
 
           <div className="text-center mb-6 pt-6 border-t border-sand">
-            <p className="text-navy/40 line-through font-medium text-lg">159 zł</p>
+            <p className="text-navy/40 line-through font-medium text-lg">R$ 159</p>
             <div className="flex items-center justify-center gap-2">
+              <p className="text-xl font-bold text-navy self-end mb-1.5">R$</p>
               <p className="text-5xl font-black text-navy">47</p>
-              <p className="text-xl font-bold text-navy self-end mb-1.5">zł</p>
             </div>
-            <p className="text-sage text-sm font-bold mt-2 bg-sage-light inline-block px-2 py-0.5 rounded">Cena ważna dzisiaj</p>
+            <p className="text-sage text-sm font-bold mt-2 bg-sage-light inline-block px-2 py-0.5 rounded">Preço válido hoje</p>
           </div>
 
-          <Button fullWidth subtext="Uzyskaj natychmiastowy dostęp na maila" onClick={onBuyClick}>
-            KUP ZA 47 ZŁ
+          <Button fullWidth subtext="Acesso imediato enviado ao e-mail" onClick={onBuyClick}>
+            COMPRE POR R$ 47
           </Button>
         </div>
       </div>

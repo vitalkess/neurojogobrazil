@@ -15,7 +15,7 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose })
     e.preventDefault();
     // Here you would typically integrate with your payment provider (WayForPay, LiqPay, Stripe)
     // passing the email as a custom field.
-    alert(`Przechodzimy do płatności. Książka zostanie wysłana na: ${email}`);
+    alert(`Vamos para o pagamento. O livro será enviado para: ${email}`);
     onClose();
   };
 
@@ -47,15 +47,15 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose })
           </div>
 
           <h3 className="text-2xl font-extrabold text-navy mb-2">
-            Gdzie wysłać książkę?
+            Para onde enviar o livro?
           </h3>
           <p className="text-navy/60 mb-8 font-medium leading-relaxed text-sm">
-            Wpisz swój email, aby uzyskać dostęp do pliku PDF i dodatkowych materiałów natychmiast po opłaceniu.
+            Digite seu e-mail para ter acesso ao arquivo PDF e materiais adicionais imediatamente após o pagamento.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative text-left">
-              <label htmlFor="email" className="sr-only">Twój Email</label>
+              <label htmlFor="email" className="sr-only">Seu E-mail</label>
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Mail className="h-5 w-5 text-navy/30" />
               </div>
@@ -74,14 +74,14 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose })
               type="submit"
               className="w-full bg-terracotta hover:bg-terracotta-dark text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-terracotta/20 flex items-center justify-center gap-2 transition-all transform active:scale-95"
             >
-              <span>Zapłać 47 zł</span>
+              <span>Pagar R$ 47</span>
               <ArrowRight size={20} className="opacity-80" />
             </button>
           </form>
 
           <div className="mt-6 flex items-center justify-center gap-2 text-xs text-navy/40 font-medium">
             <Lock size={12} />
-            <span>Twoje dane są bezpieczne. Bez spamu.</span>
+            <span>Seus dados estão seguros. Sem spam.</span>
           </div>
         </div>
       </div>

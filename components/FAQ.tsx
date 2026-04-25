@@ -27,20 +27,20 @@ export const FAQ: React.FC = () => {
     <section className="py-12 px-4 bg-white max-w-lg mx-auto">
       <div className="flex items-center justify-center gap-2 mb-8">
         <HelpCircle className="text-sage" size={24} />
-        <h2 className="text-2xl font-extrabold text-navy">Częste pytania</h2>
+        <h2 className="text-2xl font-extrabold text-navy">Perguntas frequentes</h2>
       </div>
       <div className="bg-sand-light rounded-2xl p-6 border border-sand">
-        <FAQItem 
-          question="Czy potrzebny jest specjalny sprzęt?"
-          answer="Minimum. Większość gier wymaga tylko piłki, ołówków lub zwykłego Lego, które każdy ma."
+        <FAQItem
+          question="Precisa de equipamento especial?"
+          answer="Mínimo. A maioria dos jogos requer apenas uma bola, lápis ou Lego simples que qualquer um tem."
         />
-        <FAQItem 
-          question="Od jakiego wieku zacząć?"
-          answer="Idealne dla dzieci w wieku 4–10 lat. Są proste ćwiczenia dla maluchów i złożone zadania logiczne dla uczniów."
+        <FAQItem
+          question="A partir de qual idade começar?"
+          answer="Ideal para crianças de 4 a 10 anos. Há exercícios simples para os menores e tarefas lógicas complexas para os estudantes."
         />
-        <FAQItem 
-          question="Język książki?"
-          answer="Polski. Wszystkie materiały są profesjonalnie zaadaptowane i przetłumaczone."
+        <FAQItem
+          question="Idioma do livro?"
+          answer="Português. Todos os materiais estão profissionalmente adaptados e traduzidos."
         />
       </div>
     </section>

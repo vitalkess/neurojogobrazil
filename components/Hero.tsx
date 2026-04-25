@@ -15,20 +15,20 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
 
       <div className="relative z-10 max-w-lg mx-auto text-center">
         <div className="inline-block px-4 py-1.5 mb-4 bg-white/80 backdrop-blur rounded-full shadow-sm text-sm font-bold text-sage border border-sage/20">
-          ✨ Bestseller dla rodziców
+          ✨ Bestseller para pais
         </div>
 
         <h1 className="text-3xl font-extrabold text-navy leading-tight mb-4">
-          150+ stron zabaw, które <span className="text-terracotta relative inline-block">
-            „włączają” mózg
-            <svg className="absolute w-full h-2 bottom-0 left-0 text-gold/60 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
-               <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+          150+ páginas de atividades que <span className=”text-terracotta relative inline-block”>
+            “ativam” o cérebro
+            <svg className=”absolute w-full h-2 bottom-0 left-0 text-gold/60 -z-10” viewBox=”0 0 100 10” preserveAspectRatio=”none”>
+               <path d=”M0 5 Q 50 10 100 5” stroke=”currentColor” strokeWidth=”3” fill=”none” />
             </svg>
-          </span> Twojego dziecka
+          </span> do seu filho
         </h1>
         
         <p className="text-navy/80 text-lg mb-6 leading-relaxed font-medium">
-          Bez gadżetów i korepetytorów. Wielka księga neuroćwiczeń (PDF): od zabaw ruchowych po zadania logiczne.
+          Sem gadgets ou aulas de reforço. O grande livro de neuroexercícios (PDF): de brincadeiras motoras a tarefas lógicas.
         </p>
 
         {/* Hero Image Representation */}
@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
           {/* Replaced with a thematic image of a child writing/studying */}
           <img 
             src="https://i.postimg.cc/zGnvKqfX/Generated-Image-February-17-2026-9-55PM.jpg" 
-            alt="Chłopiec pilnie pisze w zeszycie" 
+            alt="Menino escrevendo com atenção no caderno"
             className="relative rounded-xl shadow-xl border-4 border-white w-full object-cover aspect-[3/4]"
           />
           <div className="absolute -bottom-5 -right-5 bg-navy text-white font-bold py-3 px-5 rounded-xl shadow-lg transform rotate-[-3deg] border-2 border-white/50">
@@ -52,8 +52,8 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
               <Brain size={26} />
             </div>
             <div>
-              <h3 className="font-bold text-navy text-lg">Podejście naukowe</h3>
-              <p className="text-sm text-navy/70 mt-1 font-medium">Ćwiczenia oparte na rozwoju 3 bloków mózgu.</p>
+              <h3 className="font-bold text-navy text-lg">Abordagem científica</h3>
+              <p className="text-sm text-navy/70 mt-1 font-medium">Exercícios baseados no desenvolvimento de 3 blocos cerebrais.</p>
             </div>
           </div>
 
@@ -62,8 +62,8 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
               <Zap size={26} />
             </div>
             <div>
-              <h3 className="font-bold text-navy text-lg">Natychmiastowy efekt</h3>
-              <p className="text-sm text-navy/70 mt-1 font-medium">Dziecko staje się spokojniejsze już po pierwszych ćwiczeniach.</p>
+              <h3 className="font-bold text-navy text-lg">Efeito imediato</h3>
+              <p className="text-sm text-navy/70 mt-1 font-medium">A criança fica mais calma já após os primeiros exercícios.</p>
             </div>
           </div>
 
@@ -72,8 +72,8 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
               <Printer size={26} />
             </div>
             <div>
-              <h3 className="font-bold text-navy text-lg">Wygodny format</h3>
-              <p className="text-sm text-navy/70 mt-1 font-medium">Kupujesz raz — drukujesz wiele kopii dla całej rodziny.</p>
+              <h3 className="font-bold text-navy text-lg">Formato prático</h3>
+              <p className="text-sm text-navy/70 mt-1 font-medium">Compra uma vez — imprime várias cópias para toda a família.</p>
             </div>
           </div>
         </div>
@@ -83,16 +83,16 @@ export const Hero: React.FC<HeroProps> = ({ onBuyClick }) => {
           {/* Price Display */}
           <div className="flex flex-col items-center justify-center mb-3">
              <div className="flex items-center gap-3">
-                <span className="text-navy/40 text-lg font-bold line-through decoration-terracotta/50">159 zł</span>
+                <span className="text-navy/40 text-lg font-bold line-through decoration-terracotta/50">R$ 159</span>
                 <div className="bg-sage text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                  Promocja -70%
+                  Promoção -70%
                 </div>
              </div>
-             <span className="text-4xl font-extrabold text-terracotta leading-none">47 zł</span>
+             <span className="text-4xl font-extrabold text-terracotta leading-none">R$ 47</span>
           </div>
 
-          <Button subtext="PDF przyjdzie na maila natychmiast" fullWidth onClick={onBuyClick}>
-            Kup teraz
+          <Button subtext="PDF enviado ao e-mail imediatamente" fullWidth onClick={onBuyClick}>
+            Compre agora
           </Button>
         </div>
       </div>
