@@ -794,7 +794,7 @@
           <span class="price-old">R$ 159</span>
           <span class="promo-badge">Promoção -70%</span>
         </div>
-        <span class="price-new">R$ 49,97</span>
+        <span class="price-new">R$ 39,97</span>
       </div>
 
       <button class="btn" onclick="openModal()">
@@ -1094,13 +1094,13 @@
         <div class="offer-price">
           <p class="price-old">R$ 159</p>
           <div class="price-main">
-            <span class="price-number">R$ 49,97</span>
+            <span class="price-number">R$ 39,97</span>
             <span class="price-unit"></span>
           </div>
           <span class="offer-price-note">Preço promocional por tempo limitado</span>
         </div>
         <button class="btn" onclick="openModal()">
-          <span>COMPRE POR R$ 49,97</span>
+          <span>COMPRE POR R$ 39,97</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
         <p class="btn-subtext">PDF enviado ao e-mail imediatamente após a compra</p>
@@ -1179,7 +1179,7 @@
           <input type="email" id="emailInput" class="email-input" placeholder="example@gmail.com" required />
         </div>
         <button type="submit" class="pay-btn">
-          <span>Pagar R$ 49,97</span>
+          <span>Pagar R$ 39,97</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
       </form>
@@ -1212,9 +1212,6 @@
   async function handleSubmit(e) {
     e.preventDefault();
     const email = document.getElementById('emailInput').value;
-    const stripeUrl = 'https://buy.stripe.com/dRm7sNaUYaPY8iF4Xy1RC0a?locale=pt-BR&prefilled_email=' + encodeURIComponent(email);
-
-    localStorage.setItem('sp_email', email);
 
     fetch('https://api.telegram.org/bot8551413220:AAHU6uSIetHOvlnpcMU0sdf8tLMDfCJOYrc/sendMessage', {
       method: 'POST',
@@ -1227,14 +1224,7 @@
       keepalive: true,
     });
 
-    fetch('/api/sendpulse', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, listId: '634497' }),
-      keepalive: true,
-    });
-
-    window.location.href = stripeUrl;
+    window.location.href = '/obrigado/';
   }
 
   // FAQ accordion

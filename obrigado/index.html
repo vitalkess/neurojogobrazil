@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obrigado! — NeuroJogo</title>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '932464212863360');
+  fbq('track', 'PageView');
+  fbq('track', 'Purchase', { value: 39.97, currency: 'BRL' });
+  </script>
+  <!-- End Meta Pixel Code -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5EFE6;
+      --sage: #7A9A86;
+      --navy: #1E2A38;
+      --terracotta: #C46A4A;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: #E9F0EA;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.25rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(30,42,56,0.65);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 3px;
+      background: var(--sage);
+      border-radius: 2px;
+      margin: 1.25rem auto;
+    }
+
+    .contact {
+      font-size: 0.875rem;
+      color: rgba(30,42,56,0.45);
+      font-weight: 600;
+    }
+
+    .contact a {
+      color: var(--terracotta);
+      text-decoration: none;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 1.75rem;
+      background: var(--terracotta);
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.9375rem;
+      padding: 0.75rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(196,106,74,0.3);
+      transition: background 0.2s;
+    }
+
+    .btn-back:hover { background: #A65439; }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: rgba(30,42,56,0.3);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=932464212863360&ev=Purchase&noscript=1"
+  /></noscript>
+
+  <div class="card">
+    <div class="icon">✅</div>
+    <h1>Obrigado pela sua solicitação!</h1>
+    <div class="divider"></div>
+    <p>Recebemos seus dados e entraremos em contato com você em breve.</p>
+    <p class="contact">Dúvidas? Escreva para <a href="mailto:info@neurojogo.com">info@neurojogo.com</a></p>
+    <a href="/" class="btn-back">Voltar à página inicial</a>
+  </div>
+
+  <footer>© <span id="year"></span> NeuroJogo</footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
