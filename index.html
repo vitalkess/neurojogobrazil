@@ -18,7 +18,10 @@
   fbq('track', 'PageView');
   </script>
   <!-- End Meta Pixel Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/newimg.webp" type="image/webp">
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -753,7 +756,10 @@
 
       <div class="hero-image-wrap">
         <div class="hero-image-shadow"></div>
-        <img src="/newimg.png" alt="Menino escrevendo com atenção no caderno" />
+        <picture>
+          <source srcset="/newimg.webp" type="image/webp">
+          <img src="/newimg.png" alt="Menino escrevendo com atenção no caderno" width="597" height="800" fetchpriority="high" />
+        </picture>
         <div class="hero-pdf-badge">Formato PDF</div>
       </div>
 
@@ -960,31 +966,31 @@
     <div class="gallery-scroll no-scrollbar" id="galleryScroll">
       <div class="gallery-item">
         <div class="gallery-item-img">
-          <img src="/images/gallery-1.png" alt="Ditados gráficos" />
+          <picture><source srcset="/images/gallery-1.webp" type="image/webp"><img src="/images/gallery-1.png" alt="Ditados gráficos" loading="lazy" /></picture>
         </div>
         <p>Treinamento inter-hemisférico</p>
       </div>
       <div class="gallery-item">
         <div class="gallery-item-img">
-          <img src="/images/gallery-2.png" alt="Labirinto das cores" />
+          <picture><source srcset="/images/gallery-2.webp" type="image/webp"><img src="/images/gallery-2.png" alt="Labirinto das cores" loading="lazy" /></picture>
         </div>
         <p>Labirinto das cores</p>
       </div>
       <div class="gallery-item">
         <div class="gallery-item-img">
-          <img src="/images/gallery-3.png" alt="Formas e cores" />
+          <picture><source srcset="/images/gallery-3.webp" type="image/webp"><img src="/images/gallery-3.png" alt="Formas e cores" loading="lazy" /></picture>
         </div>
         <p>Formas e cores</p>
       </div>
       <div class="gallery-item">
         <div class="gallery-item-img">
-          <img src="/images/gallery-4.png" alt="Combinação de cores" />
+          <picture><source srcset="/images/gallery-4.webp" type="image/webp"><img src="/images/gallery-4.png" alt="Combinação de cores" loading="lazy" /></picture>
         </div>
         <p>Combinação de cores</p>
       </div>
       <div class="gallery-item">
         <div class="gallery-item-img">
-          <img src="/images/gallery-5.png" alt="Desenho com ambas as mãos" />
+          <picture><source srcset="/images/gallery-5.webp" type="image/webp"><img src="/images/gallery-5.png" alt="Desenho com ambas as mãos" loading="lazy" /></picture>
         </div>
         <p>Desenho com ambas as mãos</p>
       </div>
