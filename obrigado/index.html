@@ -17,7 +17,8 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '932464212863360');
   fbq('track', 'PageView');
-  fbq('track', 'Purchase', { value: 39.97, currency: 'BRL' });
+  var _sessionId = new URLSearchParams(window.location.search).get('session_id') || ('px_' + Date.now());
+  fbq('track', 'Purchase', { value: 39.97, currency: 'BRL' }, { eventID: _sessionId });
   </script>
   <!-- End Meta Pixel Code -->
 

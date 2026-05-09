@@ -53,7 +53,7 @@ async function addToSendPulse(email) {
 }
 
 // ─── Facebook CAPI ────────────────────────────────────────────────
-async function sendFbPurchase(email, amount, currency) {
+async function sendFbPurchase(email, amount, currency, eventId) {
   if (!FB_CAPI_TOKEN) return;
   try {
     const hashedEmail = crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
@@ -63,6 +63,7 @@ async function sendFbPurchase(email, amount, currency) {
       body: JSON.stringify({
         data: [{
           event_name: 'Purchase',
+          event_id: eventId,
           event_time: Math.floor(Date.now() / 1000),
           action_source: 'website',
           event_source_url: 'https://www.neurojogo.com/',
@@ -72,7 +73,7 @@ async function sendFbPurchase(email, amount, currency) {
         access_token: FB_CAPI_TOKEN,
       }),
     });
-    console.log(`✅ FB CAPI: Purchase ${amount} ${currency}`);
+    console.log(`✅ FB CAPI: Purchase ${amount} ${currency} [event_id: ${eventId}]`);
   } catch (e) { console.error('FB CAPI error:', e.message); }
 }
 
@@ -96,13 +97,14 @@ async function handlePayment(session) {
   const email    = session.customer_details?.email || session.customer_email;
   const amount   = parseFloat(((session.amount_total || 0) / 100).toFixed(2));
   const currency = (session.currency || 'BRL').toUpperCase();
+  const eventId  = session.id; // Stripe session ID — використовується для дедуплікації FB
 
   if (!email) return;
-  console.log(`💰 Payment: ${email} ${amount} ${currency}`);
+  console.log(`💰 Payment: ${email} ${amount} ${currency} [${eventId}]`);
 
   await Promise.all([
     addToSendPulse(email),
-    sendFbPurchase(email, amount, currency),
+    sendFbPurchase(email, amount, currency, eventId),
     notifyTelegram(email, amount, currency),
   ]);
 }
