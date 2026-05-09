@@ -1,126 +1,138 @@
 import crypto from 'crypto';
 
-export const config = {
-  api: { bodyParser: false },
-};
+export const config = { api: { bodyParser: false } };
 
-// ===== SendPulse =====
-const SP_CLIENT_ID = 'sp_id_cb7103ee1b39a4e7e6409a97c69c4e8b';
+// ─── Конфіг ───────────────────────────────────────────────────────
+const WEBHOOK_SECRET   = 'whsec_L9QxyXkIv6OhrvyzhrZeuCHTWnu7Z0zx';
+const SP_CLIENT_ID     = 'sp_id_cb7103ee1b39a4e7e6409a97c69c4e8b';
 const SP_CLIENT_SECRET = 'sp_sk_cee022063fb75ff1dd6a1e09bd959d39';
+const SP_LIST_BUYERS   = '665383'; // neurojogo.com - Покупки
+const TG_BOT           = '8580138136:AAEuUGcr8JPDrDdowHB-tAXZpD76w5nhCEA';
+const TG_CHAT          = '5071692828';
+const FB_PIXEL_ID      = '932464212863360';
+const FB_CAPI_TOKEN    = ''; // TODO: додати токен FB CAPI
 
-async function addToSendPulse(email, listId) {
+// ─── Верифікація підпису Stripe ───────────────────────────────────
+function verifySignature(rawBody, sigHeader, secret) {
+  const parts = Object.fromEntries(sigHeader.split(',').map(p => p.split('=')));
+  const timestamp = parts['t'];
+  const v1 = parts['v1'];
+  if (!timestamp || !v1) return false;
+
+  // Захист від replay-атак (5 хвилин)
+  if (Math.floor(Date.now() / 1000) - parseInt(timestamp) > 300) return false;
+
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(`${timestamp}.${rawBody}`, 'utf8')
+    .digest('hex');
+
+  try {
+    return crypto.timingSafeEqual(Buffer.from(v1, 'hex'), Buffer.from(expected, 'hex'));
+  } catch {
+    return false;
+  }
+}
+
+// ─── SendPulse ────────────────────────────────────────────────────
+async function addToSendPulse(email) {
   try {
     const tokenRes = await fetch('https://api.sendpulse.com/oauth/access_token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        grant_type: 'client_credentials',
-        client_id: SP_CLIENT_ID,
-        client_secret: SP_CLIENT_SECRET,
-      }),
+      body: JSON.stringify({ grant_type: 'client_credentials', client_id: SP_CLIENT_ID, client_secret: SP_CLIENT_SECRET }),
     });
     const { access_token } = await tokenRes.json();
-
-    await fetch(`https://api.sendpulse.com/addressbooks/${listId}/emails`, {
+    await fetch(`https://api.sendpulse.com/addressbooks/${SP_LIST_BUYERS}/emails`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${access_token}`,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${access_token}` },
       body: JSON.stringify({ emails: [{ email }] }),
     });
-  } catch (e) {
-    console.error('SendPulse error:', e);
-  }
+    console.log(`✅ SendPulse: ${email}`);
+  } catch (e) { console.error('SendPulse error:', e.message); }
 }
 
-async function getRawBody(req) {
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    req.on('data', (chunk) => chunks.push(chunk));
-    req.on('end', () => resolve(Buffer.concat(chunks)));
-    req.on('error', reject);
-  });
-}
-
-function verifyStripeSignature(payload, sig, secret) {
-  const parts = sig.split(',').reduce((acc, part) => {
-    const [key, val] = part.split('=');
-    acc[key] = val;
-    return acc;
-  }, {});
-
-  const signedPayload = `${parts.t}.${payload}`;
-  const expected = crypto
-    .createHmac('sha256', secret)
-    .update(signedPayload)
-    .digest('hex');
-
-  return crypto.timingSafeEqual(
-    Buffer.from(parts.v1 || '', 'hex'),
-    Buffer.from(expected, 'hex')
-  );
-}
-
-async function sendTelegram(message) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: message,
-      parse_mode: 'HTML',
-    }),
-  });
-}
-
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).end('Method Not Allowed');
-  }
-
-  const rawBody = await getRawBody(req);
-  const sig = req.headers['stripe-signature'];
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  // Verify signature
+// ─── Facebook CAPI ────────────────────────────────────────────────
+async function sendFbPurchase(email, amount, currency) {
+  if (!FB_CAPI_TOKEN) return;
   try {
-    if (!verifyStripeSignature(rawBody.toString(), sig, secret)) {
-      return res.status(400).send('Invalid signature');
-    }
-  } catch {
-    return res.status(400).send('Signature error');
+    const hashedEmail = crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
+    await fetch(`https://graph.facebook.com/v19.0/${FB_PIXEL_ID}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        data: [{
+          event_name: 'Purchase',
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: 'website',
+          user_data: { em: [hashedEmail] },
+          custom_data: { value: amount, currency },
+        }],
+        access_token: FB_CAPI_TOKEN,
+      }),
+    });
+    console.log(`✅ FB CAPI: Purchase ${amount} ${currency}`);
+  } catch (e) { console.error('FB CAPI error:', e.message); }
+}
+
+// ─── Telegram ─────────────────────────────────────────────────────
+async function notifyTelegram(email, amount, currency) {
+  try {
+    await fetch(`https://api.telegram.org/bot${TG_BOT}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT,
+        text: `💰 <b>Оплата підтверджена!</b>\n\n📧 ${email}\n💵 ${amount} ${currency}`,
+        parse_mode: 'HTML',
+      }),
+    });
+  } catch (e) { console.error('Telegram error:', e.message); }
+}
+
+// ─── Обробка оплати ───────────────────────────────────────────────
+async function handlePayment(session) {
+  const email    = session.customer_details?.email || session.customer_email;
+  const amount   = parseFloat(((session.amount_total || 0) / 100).toFixed(2));
+  const currency = (session.currency || 'BRL').toUpperCase();
+
+  if (!email) return;
+  console.log(`💰 Payment: ${email} ${amount} ${currency}`);
+
+  await Promise.all([
+    addToSendPulse(email),
+    sendFbPurchase(email, amount, currency),
+    notifyTelegram(email, amount, currency),
+  ]);
+}
+
+// ─── Головний обробник ────────────────────────────────────────────
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  const rawBody = Buffer.concat(chunks).toString('utf8');
+
+  const sig = req.headers['stripe-signature'];
+  if (!sig || !verifySignature(rawBody, sig, WEBHOOK_SECRET)) {
+    console.error('Invalid Stripe signature');
+    return res.status(400).json({ error: 'Invalid signature' });
   }
 
-  const event = JSON.parse(rawBody.toString());
+  const event = JSON.parse(rawBody);
+  console.log(`📩 Event: ${event.type}`);
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
-    const email = session.customer_details?.email || '—';
-    const name = session.customer_details?.name || '—';
-    const amount = ((session.amount_total || 0) / 100).toFixed(2).replace('.', ',');
-    const currency = (session.currency || 'pln').toUpperCase();
+  const session = event.data.object;
 
-    const message =
-      `✅ <b>Нова оплата!</b>\n\n` +
-      `💰 <b>${amount} ${currency}</b>\n` +
-      `👤 ${name}\n` +
-      `📧 ${email}`;
+  // Карта/оплата одразу
+  if (event.type === 'checkout.session.completed' && session.payment_status === 'paid') {
+    await handlePayment(session);
+  }
 
-    await sendTelegram(message);
-
-    // ===== SendPulse =====
-    if (email && email !== '—') {
-      const amountCents = session.amount_total;
-      if (amountCents === 2997) {
-        await addToSendPulse(email, '641462'); // Зестав — 29,97 zł
-      } else {
-        await addToSendPulse(email, '634501'); // NeiroBook — 49,97 zł
-      }
-    }
+  // PIX — приходить після підтвердження банком
+  if (event.type === 'checkout.session.async_payment_succeeded') {
+    await handlePayment(session);
   }
 
   res.status(200).json({ received: true });
