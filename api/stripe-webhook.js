@@ -65,6 +65,7 @@ async function sendFbPurchase(email, amount, currency) {
           event_name: 'Purchase',
           event_time: Math.floor(Date.now() / 1000),
           action_source: 'website',
+          event_source_url: 'https://www.neurojogo.com/',
           user_data: { em: [hashedEmail] },
           custom_data: { value: amount, currency },
         }],
