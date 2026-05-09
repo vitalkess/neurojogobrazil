@@ -10,7 +10,7 @@ const SP_LIST_BUYERS   = '665383'; // neurojogo.com - Покупки
 const TG_BOT           = '8580138136:AAEuUGcr8JPDrDdowHB-tAXZpD76w5nhCEA';
 const TG_CHAT          = '5071692828';
 const FB_PIXEL_ID      = '932464212863360';
-const FB_CAPI_TOKEN    = ''; // TODO: додати токен FB CAPI
+const FB_CAPI_TOKEN    = 'EAANgnDzgwgoBRd2abhPVEAG44SA7jOM4qIbpKz8BP5xetZBAG4E9tZBhLyWNQdUZAps4DXuoZCF2vLpvE8kFThrrnrHmjJKmSMJiA6lhZAY45ysMAhh0uT6JBvqhluImeyLUX66873b3CHh8u6ErU3yAePSquZAkau8MAl0CTBKfLQKc23YA1AsDbuEaTI4AZDZD';
 
 // ─── Верифікація підпису Stripe ───────────────────────────────────
 function verifySignature(rawBody, sigHeader, secret) {
