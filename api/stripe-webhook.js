@@ -125,6 +125,12 @@ export default async function handler(req, res) {
 
   const session = event.data.object;
 
+  // Ігноруємо не-бразильські оплати (польський сайт = PLN)
+  if ((session.currency || '').toLowerCase() !== 'brl') {
+    console.log(`⏭️ Skipping non-BRL payment: ${session.currency}`);
+    return res.status(200).json({ received: true });
+  }
+
   // Карта/оплата одразу
   if (event.type === 'checkout.session.completed' && session.payment_status === 'paid') {
     await handlePayment(session);
