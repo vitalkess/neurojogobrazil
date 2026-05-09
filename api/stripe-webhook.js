@@ -2,15 +2,15 @@ import crypto from 'crypto';
 
 export const config = { api: { bodyParser: false } };
 
-// ─── Конфіг ───────────────────────────────────────────────────────
-const WEBHOOK_SECRET   = 'whsec_L9QxyXkIv6OhrvyzhrZeuCHTWnu7Z0zx';
-const SP_CLIENT_ID     = 'sp_id_cb7103ee1b39a4e7e6409a97c69c4e8b';
-const SP_CLIENT_SECRET = 'sp_sk_cee022063fb75ff1dd6a1e09bd959d39';
+// ─── Конфіг (з env змінних) ───────────────────────────────────────
+const WEBHOOK_SECRET   = process.env.STRIPE_WEBHOOK_SECRET;
+const SP_CLIENT_ID     = process.env.SP_CLIENT_ID;
+const SP_CLIENT_SECRET = process.env.SP_CLIENT_SECRET;
 const SP_LIST_BUYERS   = '665383'; // neurojogo.com - Покупки
-const TG_BOT           = '8580138136:AAEuUGcr8JPDrDdowHB-tAXZpD76w5nhCEA';
-const TG_CHAT          = '5071692828';
-const FB_PIXEL_ID      = '932464212863360';
-const FB_CAPI_TOKEN    = 'EAANgnDzgwgoBRd2abhPVEAG44SA7jOM4qIbpKz8BP5xetZBAG4E9tZBhLyWNQdUZAps4DXuoZCF2vLpvE8kFThrrnrHmjJKmSMJiA6lhZAY45ysMAhh0uT6JBvqhluImeyLUX66873b3CHh8u6ErU3yAePSquZAkau8MAl0CTBKfLQKc23YA1AsDbuEaTI4AZDZD';
+const TG_BOT           = process.env.TG_BOT;
+const TG_CHAT          = process.env.TG_CHAT;
+const FB_PIXEL_ID      = process.env.FB_PIXEL_ID;
+const FB_CAPI_TOKEN    = process.env.FB_CAPI_TOKEN;
 
 // ─── Верифікація підпису Stripe ───────────────────────────────────
 function verifySignature(rawBody, sigHeader, secret) {

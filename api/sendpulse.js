@@ -1,5 +1,5 @@
-const CLIENT_ID = 'sp_id_cb7103ee1b39a4e7e6409a97c69c4e8b';
-const CLIENT_SECRET = 'sp_sk_cee022063fb75ff1dd6a1e09bd959d39';
+const CLIENT_ID = process.env.SP_CLIENT_ID;
+const CLIENT_SECRET = process.env.SP_CLIENT_SECRET;
 
 async function getToken() {
   const res = await fetch('https://api.sendpulse.com/oauth/access_token', {
