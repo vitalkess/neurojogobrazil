@@ -99,8 +99,12 @@ async function handlePayment(session) {
   const currency = (session.currency || 'BRL').toUpperCase();
   const eventId  = session.id; // Stripe session ID — використовується для дедуплікації FB
 
+  const name    = session.customer_details?.name || '—';
+  const country = session.customer_details?.address?.country || '—';
+  const method  = (session.payment_method_types || []).join(',') || '—';
+
   if (!email) return;
-  console.log(`💰 Payment: ${email} ${amount} ${currency} [${eventId}]`);
+  console.log(`💰 Payment: ${amount} ${currency} | ${name} | ${country} | ${method} | ${email}`);
 
   await Promise.all([
     addToSendPulse(email),
@@ -131,8 +135,11 @@ export default async function handler(req, res) {
   // Ігноруємо не-бразильські оплати (польський сайт = PLN)
   if ((session.currency || '').toLowerCase() !== 'brl') {
     const skipEmail = session.customer_details?.email || session.customer_email || '—';
+    const skipName = session.customer_details?.name || '—';
+    const skipCountry = session.customer_details?.address?.country || '—';
     const skipAmount = ((session.amount_total || 0) / 100).toFixed(2);
-    console.log(`⏭️ Skipping: ${skipAmount} ${(session.currency||'').toUpperCase()} | ${skipEmail}`);
+    const skipMethod = (session.payment_method_types || []).join(',') || '—';
+    console.log(`⏭️ Skip: ${skipAmount} ${(session.currency||'').toUpperCase()} | ${skipName} | ${skipCountry} | ${skipMethod} | ${skipEmail}`);
     return res.status(200).json({ received: true });
   }
 
