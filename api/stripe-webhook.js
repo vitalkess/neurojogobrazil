@@ -130,7 +130,9 @@ export default async function handler(req, res) {
 
   // Ігноруємо не-бразильські оплати (польський сайт = PLN)
   if ((session.currency || '').toLowerCase() !== 'brl') {
-    console.log(`⏭️ Skipping non-BRL payment: ${session.currency}`);
+    const skipEmail = session.customer_details?.email || session.customer_email || '—';
+    const skipAmount = ((session.amount_total || 0) / 100).toFixed(2);
+    console.log(`⏭️ Skipping: ${skipAmount} ${(session.currency||'').toUpperCase()} | ${skipEmail}`);
     return res.status(200).json({ received: true });
   }
 
